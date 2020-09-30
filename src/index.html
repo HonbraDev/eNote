@@ -28,7 +28,7 @@
             </div>
 
             <div class="right">
-                <a class="waves-effect top-btn" onclick="settings.open()"><i class="ri-settings-4-line"></i></a>
+                <a class="waves-effect top-btn" onclick="settingsDialog.open()"><i class="ri-settings-4-line"></i></a>
 
                 <a class="waves-effect top-btn" onclick="openFile()"><i class="ri-folder-open-line"></i></a>
 
@@ -92,14 +92,17 @@
 
     <div id="editor"></div>
 
-    <div id="settings" class="modal">
+    <div id="settingsDialog" class="modal">
         <div class="modal-content">
             <h4>Settings</h4>
             <p class="range-field">
                 <label for="font-slider">Font size</label>
                 <input type="range" id="font-slider" min="4" max="8" value="6" oninput="fontChange()" />
             </p>
-            <p>Changes are not saved!</p>
+            <p class="range-field">
+                <label for="autosave-slider">AutoSave Frequency</label>
+                <input type="range" id="autosave-slider" min="1" max="10" oninput="autoSaveChange()" />
+            </p>
         </div>
         <div class="modal-footer">
             <a class="modal-close waves-effect btn-flat">Done</a>

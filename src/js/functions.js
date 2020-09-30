@@ -1,5 +1,3 @@
-const { settings } = require("cluster");
-
 const remote = require("electron").remote,
     { dialog } = remote,
     currentWindow = remote.getCurrentWindow(),
@@ -93,11 +91,9 @@ module.exports.openFile = async() => {
 };
 
 module.exports.fontChange = () => {
-    document.querySelector("label[for=font-slider]").textContent = `Font size - ${document.getElementById("font-slider").value / 4}`;
-    document.getElementById("fontsize").innerHTML = `
-    .ql-editor {
-        font-size: ${document.getElementById("font-slider").value / 4}rem;
-    }`;
+    settings = getSettings();
+    settings.fontSize = document.getElementById("font-slider").value / 4;
+    saveSettings(settings);
 };
 
 module.exports.onScroll = () => {
@@ -106,4 +102,40 @@ module.exports.onScroll = () => {
     } else {
         document.getElementById("fixed").classList.remove("scrolled");
     }
+};
+
+module.exports.scheduleAutoSave = () => {
+    if (lastPath) {
+        clearTimeout(autoSaveTimeout);
+        autoSaveTimeout = setTimeout(this.saveFile, 3000);
+    }
+};
+
+module.exports.updateSettings = () => {
+    settings = getSettings();
+    document.querySelector("label[for=font-slider]").textContent = `Font size - ${settings.fontSize}`;
+    document.getElementById("fontsize").innerHTML = `
+    .ql-editor {
+        font-size: ${settings.fontSize}rem;
+    }`;
+    document.getElementById("font-slider").value = settings.fontSize * 4;
+
+    document.getElementById("autosave-slider").value = settings.autoSaveFrequency / 1000;
+    document.querySelector("label[for=autosave-slider]").textContent = `AutoSave Frequency - ${settings.autoSaveFrequency / 1000}s`;
+    console.log(settings);
+};
+
+module.exports.getSettings = () => {
+    return JSON.parse(fs.readFileSync("./src/settings.json", "utf8"));
+};
+
+module.exports.saveSettings = s => {
+    fs.writeFileSync("./src/settings.json", JSON.stringify(s));
+    updateSettings();
+};
+
+module.exports.autoSaveChange = () =>  {
+    settings = getSettings();
+    settings.autoSaveFrequency = document.getElementById("autosave-slider").value * 1000;
+    saveSettings(settings);
 };

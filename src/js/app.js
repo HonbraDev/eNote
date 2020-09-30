@@ -1,14 +1,17 @@
-const { makeWaves, onResize, windowClose, windowMaximize, windowMinimize, windowDevTools, saveFile, openFile, fontChange, onScroll } = require("./js/functions.js");
+const { makeWaves, onResize, windowClose, windowMaximize, windowMinimize, windowDevTools, saveFile, openFile, fontChange, onScroll, scheduleAutoSave, updateSettings, saveSettings, getSettings, autoSaveChange } = require("./js/functions");
+const fs = require("fs");
 
 // declare variables
 let lastPath = "",
-    editor, settings;
+    editor, settingsDialog,
+    autoSaveTimeout,
+    settings;
 
 init();
 
 // init
 function init() {
-    settings = M.Modal.init(document.getElementById("settings"));
+    settingsDialog = M.Modal.init(document.getElementById("settingsDialog"));
 
     editor = new Quill("#editor", {
         theme: "snow",
@@ -23,5 +26,7 @@ function init() {
     window.onresize = onResize;
     window.onscroll = onScroll;
     onResize();
-    fontChange();
+    updateSettings();
+
+    document.getElementById("editor").oninput = scheduleAutoSave;
 }
