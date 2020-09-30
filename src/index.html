@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>eNote</title>
+
+    <link rel="stylesheet" href="./css/materialize.min.css" />
+    <link rel="stylesheet" href="./css/katex.min.css" />
+    <link rel="stylesheet" href="./css/quill.snow.css" />
+    <link rel="stylesheet" href="css/remixicon.css" />
+
+    <script src="js/materialize.min.js"></script>
+    <script src="js/katex.min.js"></script>
+    <script src="js/quill.min.js"></script>
+
+    <link rel="stylesheet" href="css/app.css" />
+    <script defer src="js/app.js"></script>
+
+    <style id="fontsize"></style>
+</head>
+
+<body>
+    <div id="fixed">
+        <div id="top-controls">
+            <div class="left">
+                <h4 class="logo">eNote <label>aplha release</label></h4>
+            </div>
+
+            <div class="right">
+                <a class="waves-effect top-btn" onclick="settings.open()"><i class="ri-settings-4-line"></i></a>
+
+                <a class="waves-effect top-btn" onclick="openFile()"><i class="ri-folder-open-line"></i></a>
+
+                <a class="waves-effect top-btn" onclick="saveFile()"><i class="ri-save-3-line"></i></a>
+
+                <span class="divider"></span>
+
+                <a class="waves-effect top-btn" onclick="windowMinimize()"><i class="ri-arrow-down-line"></i></a>
+
+                <a class="waves-effect top-btn" onclick="windowMaximize()"><i class="ri-arrow-up-line"></i></a>
+
+                <a class="waves-effect top-btn" onclick="windowClose()"><i class="ri-close-line"></i></a>
+            </div>
+        </div>
+
+        <div id="toolbar">
+            <span class="ql-formats">
+            <select class="ql-header"></select>
+        </span>
+            <span class="ql-formats">
+            <button class="ql-bold"></button>
+            <button class="ql-italic"></button>
+            <button class="ql-underline"></button>
+            <button class="ql-strike"></button>
+        </span>
+            <span class="ql-formats">
+            <select class="ql-color"></select>
+            <select class="ql-background"></select>
+        </span>
+            <span class="ql-formats">
+            <button class="ql-script" value="sub"></button>
+            <button class="ql-script" value="super"></button>
+        </span>
+            <span class="ql-formats">
+            <button class="ql-header" value="1"></button>
+            <button class="ql-header" value="2"></button>
+            <button class="ql-blockquote"></button>
+            <button class="ql-code-block"></button>
+        </span>
+            <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+            <button class="ql-indent" value="-1"></button>
+            <button class="ql-indent" value="+1"></button>
+        </span>
+            <span class="ql-formats">
+            <button class="ql-direction" value="rtl"></button>
+            <select class="ql-align"></select>
+        </span>
+            <span class="ql-formats">
+            <button class="ql-link"></button>
+            <button class="ql-image"></button>
+            <button class="ql-video"></button>
+            <button class="ql-formula"></button>
+        </span>
+            <span class="ql-formats">
+            <button class="ql-clean"></button>
+        </span>
+        </div>
+    </div>
+
+    <div id="editor"></div>
+
+    <div id="settings" class="modal">
+        <div class="modal-content">
+            <h4>Settings</h4>
+            <p class="range-field">
+                <label for="font-slider">Font size</label>
+                <input type="range" id="font-slider" min="4" max="8" value="6" oninput="fontChange()" />
+            </p>
+            <p>Changes are not saved!</p>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect btn-flat">Done</a>
+        </div>
+    </div>
+</body>
+
+</html>
