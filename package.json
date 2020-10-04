@@ -29,7 +29,7 @@
     "config": {
         "forge": {
             "packagerConfig": {
-                "icon": "./assets/eNote logo 512.icns"
+                "icon": "./assets/logo.icns"
             },
             "makers": [{
                     "name": "@electron-forge/maker-squirrel",

@@ -1,5 +1,23 @@
-const { makeWaves, onResize, windowClose, windowMaximize, windowMinimize, windowDevTools, saveFile, openFile, fontChange, onScroll, scheduleAutoSave, updateSettings, saveSettings, getSettings, autoSaveChange } = require("./js/functions");
-const fs = require("fs");
+const {
+    makeWaves,
+    onResize,
+    windowClose,
+    windowMaximize,
+    windowMinimize,
+    windowDevTools,
+    saveFile,
+    openFile,
+    fontChange,
+    onScroll,
+    scheduleAutoSave,
+    updateSettings,
+    saveSettings,
+    getSettings,
+    autoSaveChange,
+    toast,
+    updateFileName
+} = require("./js/functions"),
+    fs = require("fs");
 
 // declare variables
 let lastPath = "",
@@ -28,5 +46,5 @@ function init() {
     onResize();
     updateSettings();
 
-    document.getElementById("editor").oninput = scheduleAutoSave;
+    editor.on("editor-change", scheduleAutoSave);
 }

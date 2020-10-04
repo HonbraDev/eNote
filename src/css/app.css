@@ -37,13 +37,13 @@ body {
 }
 
 #fixed #top-controls {
-  padding: 20px;
+  padding: 15px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   width: 100%;
   padding-bottom: 5px;
 }
@@ -60,8 +60,8 @@ body {
 #fixed #top-controls .right .top-btn {
   justify-self: right;
   -webkit-app-region: no-drag;
-  height: 32px;
-  width: 32px;
+  height: 24px;
+  width: 24px;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -76,7 +76,7 @@ body {
 }
 
 #fixed #top-controls .horiz-divider {
-  width: 20px;
+  width: 5px;
   height: 100%;
 }
 

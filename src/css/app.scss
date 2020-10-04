@@ -31,9 +31,9 @@ body {
         @include shadow(4px);
     }
     #top-controls {
-        padding: 20px;
+        padding: 15px;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         width: 100%;
         padding-bottom: 5px;
         .left {
@@ -47,8 +47,8 @@ body {
             .top-btn {
                 justify-self: right;
                 -webkit-app-region: no-drag;
-                height: 32px;
-                width: 32px;
+                height: 24px;
+                width: 24px;
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;
@@ -57,7 +57,7 @@ body {
             }
         }
         .horiz-divider {
-            width: 20px;
+            width: 5px;
             height: 100%;
         }
     }

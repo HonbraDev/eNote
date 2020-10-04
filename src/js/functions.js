@@ -40,11 +40,11 @@ module.exports.windowDevTools = () => {
     currentWindow.webContents.openDevTools();
 };
 
-module.exports.saveFile = async() => {
+module.exports.saveFile = async customPath => {
     try {
-        if (lastPath) {
+        if (customPath) {
             var files = {
-                filePath: lastPath
+                filePath: customPath
             };
         } else {
             var files = await dialog.showSaveDialog({
@@ -52,16 +52,17 @@ module.exports.saveFile = async() => {
                     { name: "JSON", extensions: ["json"] }
                 ]
             });
-            lastPath = files.filePath;
         }
+        lastPath = files.filePath;
+        updateFileName(files.filePath.split("/")[files.filePath.split("/").length - 1]);
         if (files.filePath) {
             fs.writeFileSync(files.filePath, JSON.stringify(editor.getContents()));
-            new M.Toast({ html: "File saved" });
+            toast({ html: "File saved" });
         } else {
-            new M.Toast({ html: "No file selected" });
+            toast({ html: "No file selected" });
         }
     } catch (e) {
-        new M.Toast({ html: "An error occured" });
+        toast({ html: "An error occured" });
         console.error(e);
     }
 };
@@ -78,14 +79,15 @@ module.exports.openFile = async() => {
             var file = fs.readFileSync(files.filePaths[0], "utf8");
             try {
                 editor.setContents(JSON.parse(file));
+                updateFileName(files.filePaths[0].split("/")[files.filePaths[0].split("/").length - 1]);
             } catch (e) {
-                new M.Toast({ html: "Selected file is corrupted" });
+                toast({ html: "Selected file is corrupted" });
             }
         } else {
-            new M.Toast({ html: "No file selected" });
+            toast({ html: "No file selected" });
         }
     } catch (e) {
-        new M.Toast({ html: "An error occured" });
+        toast({ html: "An error occured" });
         console.error(e);
     }
 };
@@ -107,7 +109,7 @@ module.exports.onScroll = () => {
 module.exports.scheduleAutoSave = () => {
     if (lastPath) {
         clearTimeout(autoSaveTimeout);
-        autoSaveTimeout = setTimeout(this.saveFile, 3000);
+        autoSaveTimeout = setTimeout(() => saveFile(lastPath), 3000);
     }
 };
 
@@ -126,11 +128,11 @@ module.exports.updateSettings = () => {
 };
 
 module.exports.getSettings = () => {
-    return JSON.parse(fs.readFileSync("./src/settings.json", "utf8"));
+    return JSON.parse(fs.readFileSync(__dirname + "/../settings.json", "utf8"));
 };
 
 module.exports.saveSettings = s => {
-    fs.writeFileSync("./src/settings.json", JSON.stringify(s));
+    fs.writeFileSync(__dirname + "/../settings.json", JSON.stringify(s));
     updateSettings();
 };
 
@@ -138,4 +140,12 @@ module.exports.autoSaveChange = () =>  {
     settings = getSettings();
     settings.autoSaveFrequency = document.getElementById("autosave-slider").value * 1000;
     saveSettings(settings);
+};
+
+module.exports.toast = (props) => {
+    return new M.Toast({ html: props.html, displayLength: 750 });
+};
+
+module.exports.updateFileName = name => {
+    document.getElementById("fileName").textContent = name;
 };
