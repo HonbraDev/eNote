@@ -46,5 +46,5 @@ function init() {
     onResize();
     updateSettings();
 
-    editor.on("editor-change", scheduleAutoSave);
+    editor.on("text-change", scheduleAutoSave);
 }
